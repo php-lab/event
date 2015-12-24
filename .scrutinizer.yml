@@ -1,0 +1,24 @@
+before_commands:
+    - "composer install --prefer-source"
+
+checks:
+    php:
+        code_rating: true
+        duplication: false
+
+filter:
+    paths:
+        - src/*
+        - tests/*
+
+tools:
+    php_code_sniffer:
+        enabled: true
+        config:
+            standard: PSR2
+
+coding_style:
+    php:
+        spaces:
+            before_parentheses:
+                closure_definition: true

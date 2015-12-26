@@ -23,4 +23,4 @@ $this->app->dispatch('payment.error');
 ```
 
 ## License
-PhpLab\Di is licensed under the MIT license.
+PhpLab\Event is licensed under the MIT license.

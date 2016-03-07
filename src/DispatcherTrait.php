@@ -83,14 +83,14 @@ trait DispatcherTrait
      *
      * @param string $event The unique ID of the event.
      */
-    public function dispatch(string $event)
+    public function dispatch(string $event, array $args = [])
     {
         if (isset($this->events[$event])) {
             if (! $this->reverseOrder[$event]) {
                 $this->reverseOrder[$event] = krsort($this->events[$event], SORT_NUMERIC);
             }
             foreach ($this->events[$event] as $priorityKey => $actionKey) {
-                $output = call_user_func($this->subscriptions[$actionKey], $this);
+                $output = call_user_func($this->subscriptions[$actionKey], $this, $args);
                 if (isset($output[static::STOP_KEY]) && true === $output[static::STOP_KEY]) {
                     break;
                 }

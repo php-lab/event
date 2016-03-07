@@ -49,7 +49,8 @@ interface DispatcherInterface
     /**
      * Notifies listeners about an event.
      *
-     * @param string $event The unique ID of the event.
+     * @param string $event     The unique ID of the event.
+     * @param array  $arguments Arguments for event actions.
      */
-    public function dispatch(string $event);
+    public function dispatch(string $event, array $arguments = []);
 }

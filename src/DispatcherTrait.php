@@ -81,16 +81,17 @@ trait DispatcherTrait
     /**
      * Notifies listeners about an event.
      *
-     * @param string $event The unique ID of the event.
+     * @param string $event     The unique ID of the event.
+     * @param array  $arguments Arguments for event actions.
      */
-    public function dispatch(string $event, array $args = [])
+    public function dispatch(string $event, array $arguments = [])
     {
         if (isset($this->events[$event])) {
             if (! $this->reverseOrder[$event]) {
                 $this->reverseOrder[$event] = krsort($this->events[$event], SORT_NUMERIC);
             }
             foreach ($this->events[$event] as $priorityKey => $actionKey) {
-                $output = call_user_func($this->subscriptions[$actionKey], $this, $args);
+                $output = call_user_func($this->subscriptions[$actionKey], $this, $arguments);
                 if (isset($output[static::STOP_KEY]) && true === $output[static::STOP_KEY]) {
                     break;
                 }

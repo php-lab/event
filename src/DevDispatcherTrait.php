@@ -19,11 +19,12 @@ trait DevDispatcherTrait
     /**
      * Notifies listeners about an event.
      *
-     * @param string $event The unique ID of the event.
+     * @param string $event     The unique ID of the event.
+     * @param array  $arguments Arguments for event actions.
      *
      * @return array
      */
-    public function dispatch(string $event): array
+    public function dispatch(string $event, array $arguments = []): array
     {
         $notified = [];
         if (isset($this->events[$event])) {
@@ -31,7 +32,7 @@ trait DevDispatcherTrait
                 $this->reverseOrder[$event] = krsort($this->events[$event], SORT_NUMERIC);
             }
             foreach ($this->events[$event] as $priorityKey => $actionKey) {
-                $output = call_user_func($this->subscriptions[$actionKey], $this);
+                $output = call_user_func($this->subscriptions[$actionKey], $this, $arguments);
                 $notified[] = $this->getSubscriptionInfo($actionKey, $priorityKey, $output);
                 if (isset($output[static::STOP_KEY]) && true === $output[static::STOP_KEY]) {
                     break;
